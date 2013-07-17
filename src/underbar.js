@@ -34,18 +34,18 @@ var _ = { };
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
-    var result = [];
+    var results = [];
     if (Array.isArray(collection)) {
       for (var i=0; i < collection.length; i++) {
-        result.push(iterator(collection[i], i, collection) )
+        results.push(iterator(collection[i], i, collection) );
       } 
-    return result
+    return results;
   }
       else {
         for (var key in collection) {
-          result.push(iterator(collection[key], key, collection));
+          results.push(iterator(collection[key], key, collection));
         }
-      return result;
+      return results;
     }
   };
 
@@ -64,6 +64,13 @@ var _ = { };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+    var results = [];
+    for(var i =0; i < collection.length; i++) {
+      if (iterator(collection[i], i, collection)) {
+          results.push(collection[i]);
+      } 
+    }
+    return results;
   };
 
   // Return all elements of an array that don't pass a truth test.
