@@ -26,26 +26,23 @@ var _ = { };
   // last element.
   _.last = function(array, n) {
     if (n == undefined) {
-      return array.pop();
+      return array[array.length-1];
+    } else {
+      return array.reverse().slice(0, n).reverse();
     }
-    else return array.reverse().slice(0, n).reverse();
   };
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
-    var results = [];
     if (Array.isArray(collection)) {
       for (var i=0; i < collection.length; i++) {
-        results.push(iterator(collection[i], i, collection) );
+        iterator(collection[i], i, collection);
       } 
-    return results;
-  }
-      else {
-        for (var key in collection) {
-          results.push(iterator(collection[key], key, collection));
-        }
-      return results;
+    } else {
+      for (var key in collection) {
+        iterator(collection[key], key, collection);
+      }
     }
   };
 
@@ -55,10 +52,11 @@ var _ = { };
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
-    for(var i =0; i < array.length; i++)
+    for(var i =0; i < array.length; i++){
       if (array[i] == target) {
         return i;
       };
+    }
     return -1;
   };
 
@@ -88,6 +86,13 @@ var _ = { };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var newArr = [];
+    for(var i=0; i < array.length; i++) {
+      if(_.indexOf(newArr, array[i]) === -1){
+        newArr.push(array[i]);
+      }
+    }
+    return newArr;
   };
 
 
@@ -96,6 +101,11 @@ var _ = { };
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    var results = [];
+    for (var i=0; i < array.length; i++) {
+      results.push(iterator(array[i], i, array));
+    } 
+    return results;
   };
 
   /*
@@ -111,13 +121,13 @@ var _ = { };
     // TIP: map is really handy when you want to transform an array of
     // values into a new array of values. _.pluck() is solved for you
     // as an example of this.
-    return _.map(array, function(value){
-      return value[propertyName];
-    });
   };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
+    for(var i = 0; i < list.length; i++){
+      list[i][methodName];
+    }
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -133,6 +143,7 @@ var _ = { };
   //     return total + number;
   //   }, 0); // should be 6
   //
+
   _.reduce = function(collection, iterator, initialValue) {
   };
 
