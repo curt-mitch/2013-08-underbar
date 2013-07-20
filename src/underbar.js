@@ -52,12 +52,15 @@ var _ = { };
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
-    for(var i =0; i < array.length; i++){
-      if (array[i] == target) {
-        return i;
-      };
-    }
-    return -1;
+    var result = -1;
+
+    _.each(array, function(item, index) {
+      if (item === target && result === -1) {
+        result = index;
+      }
+    });
+
+    return result;
   };
 
   // Return all elements of an array that pass a truth test.
@@ -121,7 +124,10 @@ var _ = { };
     // TIP: map is really handy when you want to transform an array of
     // values into a new array of values. _.pluck() is solved for you
     // as an example of this.
-  };
+    return _.map(array, function(value){
+      return value[propertyName];
+    });
+  };  
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
