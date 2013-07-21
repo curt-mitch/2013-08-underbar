@@ -158,10 +158,13 @@ var _ = { };
   //
 
   _.reduce = function(collection, iterator, initialValue) {
-    var results;
-    if(initialValue){
-      return results=initialValue
-    }
+    var result = 0;
+    if (Array.isArray(collection)) {
+      _.each(collection, function(previousValue, item){
+        result += previousValue;
+      });
+    };
+    return result;
   };
 
   // Determine if the array or object contains a given value (using `===`).
