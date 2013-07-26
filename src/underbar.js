@@ -131,16 +131,14 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
-    if(typeof methodName == "string"){
-      return _.map(list, function(value){
+    return _.map(list, function(value){
+      if(typeof methodName == "string"){
         return value[methodName].apply(value);
-      });
-    };
-    if(typeof methodName == "function"){
-      return _.map(list, function(value){
+      };
+      if(typeof methodName == "function"){
         return methodName.apply(value);
-      });
-    };
+      };
+    });
   };
 
   // Reduces an array or object to a single value by repetitively calling
@@ -158,13 +156,10 @@ var _ = { };
   //
 
   _.reduce = function(collection, iterator, initialValue) {
-    var result = 0;
-    if (Array.isArray(collection)) {
-      _.each(collection, function(previousValue, item){
-        result += previousValue;
-      });
-    };
-    return result;
+    _.each(collection, function(item, index, collection){
+      item = iterator.call(initialValue, item);
+    });
+    return item;
   };
 
   // Determine if the array or object contains a given value (using `===`).
