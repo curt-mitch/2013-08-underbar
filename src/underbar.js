@@ -156,10 +156,14 @@ var _ = { };
   //
 
   _.reduce = function(collection, iterator, initialValue) {
+    var memo = initialValue;
+    if(initialValue == undefined){
+      initialValue, memo = 0;
+    };
     _.each(collection, function(item, index, collection){
-      item = iterator.call(initialValue, item);
+      memo = iterator(memo, item);
     });
-    return item;
+    return memo;
   };
 
   // Determine if the array or object contains a given value (using `===`).
