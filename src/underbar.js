@@ -195,14 +195,13 @@ var _ = { };
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
     if(!iterator){
-      return true;
-    };
-    return _.reduce(collection, function(item, truthTest){
+      var iterator = function (i) { return i; };
+    }
+    return _.reduce(collection, function(truthTest, item){
       if(truthTest){
         return true;
-      } else {
-        return iterator(item);
-      };
+      }
+      return !!iterator(item);
     }, false);
   };
 
