@@ -155,11 +155,8 @@ var _ = { };
   //   }, 0); // should be 6
   //
 
-  _.reduce = function(collection, iterator, initialValue) {
-    var memo = initialValue;
-    if(initialValue == undefined){
-      initialValue, memo = 0;
-    };
+  _.reduce = function(collection, iterator, memo) {
+    if(memo === undefined){memo = 0};
     _.each(collection, function(item, index, collection){
       memo = iterator(memo, item);
     });
@@ -182,12 +179,31 @@ var _ = { };
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if(!iterator){
+      var iterator = function (i) { return i; };
+    }
+    return _.reduce(collection, function(truthTest, item){
+      if(!truthTest){
+        return false;
+      }
+      return !!iterator(item);
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if(!iterator){
+      return true;
+    };
+    return _.reduce(collection, function(item, truthTest){
+      if(truthTest){
+        return true;
+      } else {
+        return iterator(item);
+      };
+    }, false);
   };
 
 
