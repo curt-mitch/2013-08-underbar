@@ -157,7 +157,7 @@ var _ = { };
 
   _.reduce = function(collection, iterator, memo) {
     if(memo === undefined){memo = 0};
-    _.each(collection, function(item, index, collection){
+    _.each(collection, function(item){
       memo = iterator(memo, item);
     });
     return memo;
@@ -287,6 +287,9 @@ var _ = { };
   _.memoize = function(func) {
     var result;
     var memo;
+    // var funcArgs = func.arguments;
+    // if(funcArgs.length < 1){alert("Error")};
+    // var funcArg = Array.prototype.slice.call(funcArgs)
     return function(){
       if(arguments !== memo){
         result = func.apply(this, arguments);
@@ -303,6 +306,15 @@ var _ = { };
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var extraArgs = [];
+    if(arguments.length > 2){
+      for(var i=2; i < arguments.length; i++){
+        extraArgs.push(arguments[i])
+      }
+    }
+    return setTimeout(function(){
+      return func.apply(this,extraArgs);
+    }, wait);
   };
 
 
