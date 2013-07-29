@@ -325,6 +325,16 @@ var _ = { };
 
   // Shuffle an array.
   _.shuffle = function(array) {
+    //using the Fisher-Yates algorithm
+    var newArray = [];
+    var placeholder;
+    for(var i=array.length-1; i >= 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      placeholder = array[i];
+      array[i] = newArray[j];
+      newArray[j] = placeholder;
+    }
+    return newArray;
   };
 
 
